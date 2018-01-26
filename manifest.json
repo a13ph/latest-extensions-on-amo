@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "0.8",
+  "homepage_url": "https://github.com/jvillalobos/latest-on-amo",
+  "default_locale": "en",
+
+  "applications": {
+    "gecko": {
+      "id": "latest-on-amo@jorgev"
+    }
+  },
+
+  "icons": {
+    "64": "icons/default-64.png"
+  },
+
+  "sidebar_action": {
+    "default_title": "__MSG_extensionName__",
+    "default_panel": "sidebar/latest.html",
+    "default_icon": "icons/default-64.png"
+  }
+}

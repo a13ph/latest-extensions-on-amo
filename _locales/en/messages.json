@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Latest on AMO",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Extension that shows a feed of the latest add-ons on addons.mozilla.org.",
+    "description": "Description of the extension."
+  }
+}

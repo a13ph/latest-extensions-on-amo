@@ -1,0 +1,44 @@
+body {
+  background-color: #f9f9fa;
+}
+
+p {
+  margin: 0.3em;
+}
+
+.image-container > img {
+  width: 32px;
+  height: 32px;
+  margin: 6px;
+}
+
+.addon-container {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  grid-template-rows: 44px 1fr;
+  border-bottom: solid thin #d9d9d9;
+  padding: 0.3em;
+}
+
+.name-container {
+  margin-top: 6px;
+  padding: 3px;
+}
+
+.name-container > a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.metadata-container {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.addon-summary {
+  font-size: 85%;
+}
+
+.last-updated {
+  font-size: 70%;
+}
