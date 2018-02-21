@@ -29,15 +29,15 @@ function updateAddons() {
               "url": addon.url,
               "name": addon.name[addon.default_locale],
               "lastUpdated": addon.last_updated,
-              "iconURL": addon.icon_url };
+              "iconURL": addon.icon_url,
+              "summary": "" };
 
-          if ("persona" != addon.type) {
-            addonData["summary"] =
-              (addon.summary ? addon.summary[addon.default_locale] : "");
-          } else {
-            addonData["summary"] =
-              (addon.description ? addon.description[addon.default_locale] :
-               "");
+          if (("persona" != addon.type) && addon.summary &&
+              addon.summary[addon.default_locale]) {
+            addonData["summary"] = addon.summary[addon.default_locale];
+          } else if (addon.description &&
+            addon.description[addon.default_locale]){
+            addonData["summary"] = addon.description[addon.default_locale];
           }
 
           latestAddons.push(addonData);
@@ -64,17 +64,20 @@ function updateAddons() {
 function updateSidebar() {
   let loadingMessage = document.getElementById("loading-message");
   let addonList = document.getElementById("addon-list");
+  let tempList = document.createDocumentFragment();
 
   clearSidebar();
 
   for (let addon of latestAddons) {
     try {
-      addonList.appendChild(createAddonNode(addon));
+      tempList.appendChild(createAddonNode(addon));
     } catch (e) {
-      console.log(`Error appending add-on node:\n${e}`);
+      console.log(
+        `Error appending add-on node:\n${e}\nData:\n${JSON.stringify(addon)}`);
     }
   }
 
+  addonList.appendChild(tempList);
   loadingMessage.hidden = true;
 }
 
