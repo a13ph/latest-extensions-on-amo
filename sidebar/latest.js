@@ -1,9 +1,8 @@
-// If you're forking this add-on, you need your own API key from Tumblr.
-// See https://www.tumblr.com/docs/en/api/v2
 const REQ_LIMIT = 20;
 const API_URL =
   "https://addons.mozilla.org/api/v3/addons/search/?sort=created&page_size=100";
 const UPDATE_RATE = 10 * 60 * 1000; // 10 minutes (in ms)
+const SETTINGS_STORAGE = "la-settings";
 
 let latestAddons = [];
 
@@ -11,7 +10,29 @@ let latestAddons = [];
  * Updates the list of latest add-ons.
  */
 function updateAddons() {
+  browser.storage.local.get(SETTINGS_STORAGE, results => {
+    let type = "all";
+
+    if (results[SETTINGS_STORAGE] && results[SETTINGS_STORAGE]["type"]) {
+      type = results[SETTINGS_STORAGE]["type"];
+    }
+
+    getAddons(type);
+  });
+}
+
+/**
+ * Gets the add-ons list using the AMO API.
+ */
+function getAddons(aType) {
   let xhr = new XMLHttpRequest();
+  let url = API_URL;
+
+  if ("extensions" == aType) {
+    url += "&type=extension";
+  } else if ("themes" == aType) {
+    url += "&type=persona";
+  }
 
   //console.log("Updating add-ons");
 
@@ -52,7 +73,7 @@ function updateAddons() {
     }
   });
 
-  xhr.open("GET", API_URL);
+  xhr.open("GET", url);
   xhr.send();
 
   window.setTimeout(function() { updateAddons(); }, UPDATE_RATE);
@@ -158,5 +179,11 @@ function formatSummary(text) {
 function formatDate(text) {
   return text.split("T")[0];
 }
+
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if ("update-type-filter" == request) {
+    updateAddons();
+  }
+});
 
 updateAddons();

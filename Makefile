@@ -36,6 +36,10 @@ xpi_built := manifest.json \
 						 $(wildcard sidebar/*.js) \
 						 $(wildcard sidebar/*.css) \
 						 $(wildcard sidebar/*.png) \
+						 $(wildcard options/*.html) \
+						 $(wildcard options/*.js) \
+						 $(wildcard options/*.css) \
+						 $(wildcard options/*.png) \
 						 $(wildcard _locales/*/messages.json)
 
 $(xpi_file): $(xpi_built)
